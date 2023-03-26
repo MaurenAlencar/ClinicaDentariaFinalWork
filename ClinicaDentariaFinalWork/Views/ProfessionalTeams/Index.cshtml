@@ -1,0 +1,109 @@
+﻿@using NonFactors.Mvc.Grid;
+@model IEnumerable<ClinicaDentariaFinalWork.Models.ProfessionalTeam>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Locality)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxPayerNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PositionSelect)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpecialtiesSelect)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locality)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxPayerNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PositionSelect)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.SpecialtiesSelect)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@(
+Html
+        .Grid(Model)
+        .Build(columns =>
+        {
+            columns.Add(Model => Model.Name).Titled(SharedLocalizer["Name"]);
+            columns.Add(Model => Model.Birthday).Titled(SharedLocalizer["Birthday"]).Filterable(GridFilterType.Double).Formatted("{0:d}");
+            columns.Add(Model => Model.Address).Titled(SharedLocalizer["Address"]);
+            columns.Add(Model => Model.Locality).Titled(SharedLocalizer["Locality"]);
+            columns.Add(Model => Model.ZipCode).Titled(SharedLocalizer["Zip-Code"]);
+            columns.Add(Model => Model.TaxPayerNumber).Titled(SharedLocalizer["TaxPayer Number"]);
+            columns.Add(Model => Model.PositionSelect).Titled(SharedLocalizer["Position"]);
+            columns.Add(Model => Model.SpecialtiesSelect).Titled(SharedLocalizer["Specialty"]);
+
+            columns.Add(Model => Html.ActionLink(SharedLocalizer["Edit"].Value, "Edit", new { id = Model.ID }));
+            columns.Add(Model => Html.ActionLink(SharedLocalizer["Details"].Value, "Details", new { id = Model.ID }));
+            columns.Add(Model => Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = Model.ID }));
+
+        })
+        .Filterable()
+        .Pageable(pager =>
+                 {
+                     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 2, "2" }, { 4, "4" } };
+                     pager.ShowPageSizes = true;
+                     pager.PagesToDisplay = 3;
+                     pager.RowsPerPage = 2;
+                  })
+
+
+)

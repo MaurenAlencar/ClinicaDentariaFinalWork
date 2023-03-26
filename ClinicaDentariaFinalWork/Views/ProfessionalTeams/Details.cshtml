@@ -1,0 +1,73 @@
+﻿@model ClinicaDentariaFinalWork.Models.ProfessionalTeam
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@SharedLocalizer["Details"]</h1>
+
+<div>
+    <h4>@SharedLocalizer["ProfessionalTeam"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Locality)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Locality)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxPayerNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TaxPayerNumber)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PositionSelect)
+        </dt>
+        <dd class = "col-sm-10">
+            @*@Html.DisplayFor(model => model.PositionSelect)*@
+            @foreach(var p in Model.PositionSelect)
+            {
+                <p>@p.ProfessionalTeams</p>
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SpecialtiesSelect)
+        </dt>
+        <dd class = "col-sm-10">
+            @foreach (var s in Model.SpecialtiesSelect)
+            {
+                <p>@s.Name</p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ID">@SharedLocalizer["Edit"]</a> |
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
+</div>

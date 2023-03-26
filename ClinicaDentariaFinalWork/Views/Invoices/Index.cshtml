@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ClinicaDentariaFinalWork.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">@SharedLocalizer["Create New"]</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procedure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Clients)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+           @* <th>
+                @Html.DisplayNameFor(model => model.Appointments)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvoiceNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Procedure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clients)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            @*</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Appointments)
+                </td>
+            <td>*@
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@(
+Html
+    .Grid(Model)
+    .Build(columns =>
+{
+    columns.Add(Model => Model.InvoiceNumber).Titled(SharedLocalizer["Invoice Number"]);
+    columns.Add(Model => Model.Procedure).Titled(SharedLocalizer["Description procedure performed"]);
+    columns.Add(Model => Model.Value).Titled(SharedLocalizer["Final Value"]);
+    columns.Add(Model => Model.Clients).Titled(SharedLocalizer["Clients"]);
+    columns.Add(Model => Model.Status).Titled(SharedLocalizer["Payment status"]);
+    //columns.Add(Model => Model.Appointments).Titled(SharedLocalizer["Appointment"]);
+    
+
+    columns.Add(Model => Html.ActionLink(SharedLocalizer["Edit"].Value, "Edit", new { id = Model.ID }));
+    columns.Add(Model => Html.ActionLink(SharedLocalizer["Details"].Value, "Details", new { id = Model.ID }));
+    columns.Add(Model => Html.ActionLink(SharedLocalizer["Delete"].Value, "Delete", new { id = Model.ID }));
+
+})
+    .Filterable()
+    .Pageable(pager =>
+ {
+     pager.PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 2, "2" }, { 4, "4" } };
+     pager.ShowPageSizes = true;
+     pager.PagesToDisplay = 3;
+     pager.RowsPerPage = 2;
+ })
+
+
+)

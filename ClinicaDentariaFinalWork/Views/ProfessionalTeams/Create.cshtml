@@ -1,0 +1,135 @@
+﻿@using ClinicaDentariaFinalWork.Models.PositionViewModels;
+@using ClinicaDentariaFinalWork.Models.ProfessionalsViewModels;
+
+@model ClinicaDentariaFinalWork.Models.ProfessionalsViewModels.ProfessionalViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h1>@SharedLocalizer["Create"]</h1>
+
+<h4>@SharedLocalizer["ProfessionalTeam"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthday" class="control-label"></label>
+                <input asp-for="Birthday" class="form-control" />
+                <span asp-validation-for="Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Locality" class="control-label"></label>
+                <input asp-for="Locality" class="form-control" />
+                <span asp-validation-for="Locality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ZipCode" class="control-label"></label>
+                <input asp-for="ZipCode" class="form-control" />
+                <span asp-validation-for="ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxPayerNumber" class="control-label"></label>
+                <input asp-for="TaxPayerNumber" class="form-control" />
+                <span asp-validation-for="TaxPayerNumber" class="text-danger"></span>
+            </div>
+           
+
+            
+
+             @*o que estar funcionando*@
+           @* <div class="form-group">
+             
+                    @Html.LabelFor(model => model.PositionID, "PositionID",  new { @class = "control-label" })
+                    @Html.DropDownListFor(e => e.PositionID , ViewBag.SelectedPositionID as IEnumerable<SelectListItem>, "PositionID")
+                    @Html.ValidationMessageFor(e => e.PositionID )
+               
+               
+            </div>*@
+
+
+
+             @*<div class="form-group">
+                 <table>
+                     <thead>
+                         <tr>
+                                <th>@Html.DisplayFor(model => model.SPositions.First().NamePosition)</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                        @for (int i = 0; i < Model.SPositions.Count; i++)
+                        {
+                                <tr>
+                               
+                                    <td><input asp-for="@Model.SPositions[i].Selected"/></td>
+                                <input type="hidden" asp-for="@Model.SPositions[i].PositionID"/>
+                                </tr>
+                            }
+                        </tbody>
+                 </table>
+             </div> *@
+
+
+            <div class="form-group">
+                <div class="card border-primary">
+                    <div class="card-header fw-bold border-primary">
+                        Cargo
+                    </div>
+                    <div class="row">
+                        <div class="col-10 offset-1">
+                            <ng-form>
+                                <div class="mb-2">
+                                    <label>Position</label>
+                                    <select asp-for="PositionID" id="position" class="form-control"></select>
+                                </div>
+                                <div class="mb-2">
+                                    <label>Specialty</label>
+                                    <select asp-for="SpecialtyID" id="specialty" class="form-control"></select>
+                                </div>
+                            </ng-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/js/cascading.js"></script>
+
+            @*<td>@Model.SPositions[i].PositionList</td>*@
+
+
+           
+
+            @*@Html.DropDownListFor(model => model.OptionsPosition, new MultiSelectList(Enum.GetValues(typeof(Positions))),"PositionID"),*@
+
+           @* <div class="form-group">
+                <label asp-for="Specialty" class="control-label"></label>
+                <input asp-for="Specialty" class="form-control" />
+                <span asp-validation-for="Specialty" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value=@SharedLocalizer["Create"] class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">@SharedLocalizer["Back to List"]</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
