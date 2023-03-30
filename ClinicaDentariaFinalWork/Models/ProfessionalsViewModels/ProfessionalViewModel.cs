@@ -41,7 +41,7 @@ namespace ClinicaDentariaFinalWork.Models.ProfessionalsViewModels
         [Display(Name = "Position")]
 
         public int PositionID { get; set; }
-        public int[] PositionIDs { get; set; } = Array.Empty<int>();
+        //public int[] PositionIDs { get; set; } 
        // public List<SelectablePositionViewModel> SelectablePositions { get; set; }
 
 
@@ -49,37 +49,39 @@ namespace ClinicaDentariaFinalWork.Models.ProfessionalsViewModels
         [Display(Name = "Specialty")]
 
         public int SpecialtyID { get; set; }
-        public int[] SpecialtyIDs { get; set; } = Array.Empty<int>();
+        //public int[] SpecialtyIDs { get; set; } //= Array.Empty<int>();
         //public List<SelectableSpecialtyViewModel> SelectableSpecialties { get; set; }
 
 
+        //public void AddPositionID(int value)
+        //{
+        //    if (PositionIDs == null)
+        //    {
+        //        PositionIDs = new int[] { value };
+        //    }
+        //    else
+        //    {
+        //        PositionIDs = PositionIDs.Concat(new int[] { value }).ToArray();
+        //    }
+        //}
 
-
-        //esta funicionando
-        // [Display(Name = "position")]
-
-
-        //public int PositionID { get; set; }
-
-        //public string Nameposition { get; set; }
-        //public Positions OptionsPosition { get; set; }
-
-
+        //public void AddSpecialtyID(int value)
+        //{
+        //    if (SpecialtyIDs == null)
+        //    {
+        //        SpecialtyIDs = new int[] { value };
+        //    }
+        //    else
+        //    {
+        //        SpecialtyIDs = SpecialtyIDs.Concat(new int[] { value }).ToArray();
+        //    }
+        //}
 
 
 
 
     }
 
-
-
-
-    //public enum Positions
-    //{
-    //    Assistente,
-    //    Médico,
-    //    Recepcionista
-    //}
 
 
 

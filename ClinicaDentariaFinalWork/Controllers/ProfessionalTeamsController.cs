@@ -5,9 +5,11 @@ using ClinicaDentariaFinalWork.Models.ProfessionalsViewModels;
 using ClinicaDentariaFinalWork.Models.SpecialtyViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Position = ClinicaDentariaFinalWork.Models.PositionViewModels.Position;
 
 namespace ClinicaDentariaFinalWork.Controllers
 {
@@ -87,80 +89,55 @@ namespace ClinicaDentariaFinalWork.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("ID,Name,Birthday,Address,Locality,ZipCode,TaxPayerNumber,Position,Specialty")] ProfessionalTeam professionalTeam)
-        public async Task<IActionResult> Create([Bind("ID,Name,Birthday,Address,Locality,ZipCode,TaxPayerNumber,Position,Specialty, PositionID,SpecialtyID,PositionIDs,SpecialtyIDs")] ProfessionalViewModel professionalViewModel)
+        public async Task<IActionResult> Create([Bind("ID,Name,Birthday,Address,Locality,ZipCode,TaxPayerNumber,PositionSelect,SpecialtiesSelect, PositionID,SpecialtyID")] ProfessionalViewModel professionalViewModel)
         {
             if (ModelState.IsValid)
             {
-                
-
-                //foreach (var select in professionalViewModel.SPositions)
-
-                //{
-                //    if (select.Selected == true)
-                //    {
-                //        SelectedPosition equipa = teamsPosition.Find(select.ID);
-                //        if (select != null)
-                //        {
-                //            teams.Add(equipa);
-                //        }
 
 
-                //            //if (selectPosition.Equals("Assistente"))
-                //            //{
-                //            //    teams = (string)selectPosition;
-                //            //}
-                //            //if (selectPosition.Equals("Médico"))
-                //            //{
-                //            //    teams = (string)selectPosition;
-                //            //}
-                //            //if (selectPosition.Equals("Recepcionista"))
-                //            //{
-                //            //    teams = (string)selectPosition;
-                //            //}
-                //        }
 
-                //}
 
                 List<Position> positions = new List<Position>();
                 List<Specialty> specialties = new List<Specialty>();
 
-                //if (professionalViewModel.PositionID >= 0)
-                //{
-                //    //for (int i = 0; i <1; i++)
-                //    //{
-                //    //    professionalViewModel.PositionIDs[i] = professionalViewModel.PositionID;
-                        for (int j = 0; j < professionalViewModel.PositionID; j++)
+
+                if (professionalViewModel.PositionID >= 0)
+                {
+                    for (int i = 0; i < professionalViewModel.PositionID; i++)
+                    {
+                        int positionID = professionalViewModel.PositionID;
+                        Position? position = _context.Positions.Find(positionID);
+                        if (position != null)
                         {
-                            int positionID = professionalViewModel.PositionID;
-                            Position? position = _context.Positions.Find(positionID);
-                            if (position != null)
-                            {
-                                positions.Add(position);
-                            }
+                            positions.Add(position);
+
                         }
+                    }
 
-                    //}
 
-               // }
-                //if (professionalViewModel.SpecialtyID >= 0)
-                //{
+                }
 
-                    //for (int i = 0; i < 1; i++)
-                    //{
-                    //    professionalViewModel.SpecialtyIDs[i] = professionalViewModel.SpecialtyID;
-                        for (int j = 0; j < professionalViewModel.SpecialtyID; j++)
+                if (professionalViewModel.SpecialtyID >= 0)
+                {
+
+                    for (int j = 0; j < professionalViewModel.SpecialtyID; j++)
+                     {
+                   
+                   
+                        int specialtyID = professionalViewModel.SpecialtyID;
+                        Specialty? specialty = _context.Specialties.Find(specialtyID);
+                        if (specialty != null)
                         {
-                            int specialtyID = professionalViewModel.SpecialtyID;
-                            Specialty? specialty = _context.Specialties.Find(specialtyID);
-                            if (specialty != null)
-                            {
-                                specialties.Add(specialty);
-                            }
+                            specialties.Add(specialty);
                         }
-                    //}
-                //}
+                    }
+
+                }
 
 
+                
+
+                
 
 
 
@@ -181,17 +158,11 @@ namespace ClinicaDentariaFinalWork.Controllers
                 _context.Add(team);
                 await _context.SaveChangesAsync();
 
-
-
                 return RedirectToAction(nameof(Index));
             }
-            //ViewBag.SelectedPositionID = new List<SelectListItem>
-            //{
-            //         new SelectListItem { Value = "", Text = "Selecione", Selected=true},
-            //        new SelectListItem { Value = "1", Text = "Assistente"},
-            //        new SelectListItem { Value = "2", Text = "Médico"},
-            //        new SelectListItem { Value = "3", Text = "Recepcionista"}
-            //};
+
+            ViewData["PositionIDs"] = new MultiSelectList(_context.Positions, "ID", "Name");
+            ViewData["SpecialtyIDs"] = new MultiSelectList(_context.Specialties, "ID", "Name");
             return View(professionalViewModel);
         }
 
